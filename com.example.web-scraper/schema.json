@@ -25,6 +25,25 @@
       "description": "结果文件的输出格式",
       "enum": ["json", "txt"],
       "default": "json"
+    },
+    "output_directory": {
+      "type": "string",
+      "format": "directory",
+      "title": "5. 输出目录",
+      "description": "选择保存结果的目录"
+    },
+    "take_screenshot": {
+      "type": "boolean",
+      "title": "6. 截图功能",
+      "description": "是否在抓取内容时截取网页截图",
+      "default": true
+    },
+    "screenshot_format": {
+      "type": "string",
+      "title": "7. 截图格式",
+      "description": "截图文件的格式",
+      "enum": ["png", "jpg"],
+      "default": "png"
     }
   },
   "required": ["target_url"]

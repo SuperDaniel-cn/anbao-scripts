@@ -21,15 +21,15 @@ async function build() {
 // @description   ${pkg.description || ''}
 // @tags          ${(pkg.tags || []).join(', ')}
 // @keywords      ${(pkg.keywords || []).join(', ')}
-// @engine        playwright
-// @launchOptions { "headless": false, "slowMo": 50 }
+// @engine        patchright
+// @launchOptions { "channel": "chrome", "headless": false, "slowMo": 50 }
 //
 // @schema
 ${schema.trim().replace(/^/gm, '// ')}
 // ==/AnbaoScript==`;
     
     // 确保输出目录存在
-    const outputDir = path.join(__dirname, '1.0.0');
+    const outputDir = path.join(__dirname, pkg.version);
     await fs.mkdir(outputDir, { recursive: true });
     
     // 执行 esbuild 构建
