@@ -1,14 +1,25 @@
 [
   {
     "id": "com.example.hello-world",
-    "name": "",
-    "description": "",
-    "author": "",
-    "tags": [],
+    "name": "Hello World",
+    "description": "一个简单的脚本，用于在控制台打印 'Hello World'。",
+    "author": "Daniel",
+    "tags": [
+      "example",
+      "hello",
+      "test"
+    ],
     "versions": [
       {
-        "changelog": "",
-        "published_at": "2025-10-03T14:48:57.706Z",
+        "version": "1.0.1",
+        "changelog": "初始版本，支持基本上传功能。",
+        "published_at": "2025-10-03T15:19:36.193Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.hello-world/1.0.1/bundle.js"
+      },
+      {
+        "version": "1.0.0",
+        "changelog": "初始版本。",
+        "published_at": "2025-10-03T15:19:35.787Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.hello-world/1.0.0/bundle.js"
       }
     ]
