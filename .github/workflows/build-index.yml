@@ -1,4 +1,4 @@
-name: Build Market Index
+name: Build and Deploy Market Index
 
 on:
   push:
@@ -6,26 +6,24 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # 允许 Action 推送代码到 gh-pages 分支
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "18"
 
-      - name: Build index file
-        id: build_index
+      - name: Build market index
         run: node .github/scripts/build-index.js
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public # 将 public 目录发布到 gh-pages 分支
+          publish_dir: ./public
