@@ -1,26 +1,21 @@
 [
   {
-    "id": "com.example.hello-world",
-    "name": "Hello World",
-    "description": "一个简单的脚本，用于在控制台打印 'Hello World'。",
-    "author": "Daniel",
+    "id": "com.example.web-scraper",
+    "name": "网页内容抓取器",
+    "description": "一个简单的网页内容抓取脚本，可以从指定网页提取标题和文本内容。",
+    "author": "Anbao Team",
     "tags": [
-      "example",
-      "hello",
-      "test"
+      "web",
+      "scraper",
+      "content",
+      "example"
     ],
     "versions": [
       {
-        "version": "1.0.1",
-        "changelog": "初始版本，支持基本上传功能。",
-        "published_at": "2025-10-03T15:19:36.193Z",
-        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.hello-world/1.0.1/bundle.js"
-      },
-      {
         "version": "1.0.0",
-        "changelog": "初始版本。",
-        "published_at": "2025-10-03T15:19:35.787Z",
-        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.hello-world/1.0.0/bundle.js"
+        "changelog": "",
+        "published_at": "2025-10-03T16:16:50.200Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
   }
