@@ -1,0 +1,21 @@
+{
+  "name": "com.example.web-scraper",
+  "displayName": "网页内容抓取器",
+  "version": "1.0.0",
+  "description": "一个简单的网页内容抓取脚本，可以从指定网页提取标题和文本内容。",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["baidu", "google", "sogou", "duckduckgo", "bing"],
+  "tags": ["web", "scraper", "content", "example"],
+  "author": "Anbao Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
+    "playwright": "^1.35.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "title": "网页内容抓取参数",
+  "type": "object",
+  "properties": {
+    "target_url": {
+      "type": "string",
+      "title": "1. 目标网页URL",
+      "description": "要抓取内容的网页地址"
+    },
+    "max_content_length": {
+      "type": "integer",
+      "title": "2. 最大内容长度",
+      "description": "限制抓取的内容最大字符数",
+      "default": 1000
+    },
+    "include_images": {
+      "type": "boolean",
+      "title": "3. 包含图片信息",
+      "description": "是否同时抓取页面中的图片信息",
+      "default": false
+    },
+    "output_format": {
+      "type": "string",
+      "title": "4. 输出格式",
+      "description": "结果文件的输出格式",
+      "enum": ["json", "txt"],
+      "default": "json"
+    }
+  },
+  "required": ["target_url"]
+}
