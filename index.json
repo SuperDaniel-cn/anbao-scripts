@@ -2,19 +2,26 @@
   {
     "id": "com.example.web-scraper",
     "name": "网页内容抓取器",
-    "description": "一个简单的网页内容抓取脚本，可以从指定网页提取标题和文本内容。",
+    "description": "一个功能强大的网页内容抓取脚本，支持自定义输出目录和截图功能。",
     "author": "Anbao Team",
     "tags": [
       "web",
       "scraper",
       "content",
-      "example"
+      "example",
+      "screenshot"
     ],
     "versions": [
       {
+        "version": "1.0.1",
+        "changelog": "",
+        "published_at": "2025-10-03T16:33:58.697Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.1/bundle.js"
+      },
+      {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-03T16:16:50.200Z",
+        "published_at": "2025-10-03T16:33:58.526Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
