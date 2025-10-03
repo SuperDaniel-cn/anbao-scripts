@@ -1,0 +1,18 @@
+{
+  "name": "com.anbao.platform-test",
+  "displayName": "平台功能测试脚本",
+  "version": "1.0.0",
+  "description": "测试平台 keyword 功能，支持搜狗和百度，搜狗支持截图，百度支持自定义搜索词，通用通知。",
+  "author": "Anbao Team",
+  "license": "ISC",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": ["baidu", "sogou"],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
+    "playwright": "^1.35.0",
+    "typescript": "^5.0.0"
+  }
+}

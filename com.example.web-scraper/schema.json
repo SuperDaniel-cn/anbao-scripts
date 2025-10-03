@@ -1,0 +1,25 @@
+{
+  "title": "搜狗搜索测试参数",
+  "type": "object",
+  "properties": {
+    "search_term": {
+      "type": "string",
+      "title": "1. 搜索词",
+      "description": "要在搜狗搜索的关键词"
+    },
+    "output_directory": {
+      "type": "string",
+      "format": "directory",
+      "title": "2. 输出目录",
+      "description": "选择保存截图的目录"
+    },
+    "screenshot_format": {
+      "type": "string",
+      "title": "3. 截图格式",
+      "description": "截图文件的格式",
+      "enum": ["png", "jpg"],
+      "default": "png"
+    }
+  },
+  "required": ["search_term"]
+}

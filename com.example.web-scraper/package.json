@@ -1,0 +1,21 @@
+{
+  "name": "com.example.web-scraper",
+  "displayName": "网页内容抓取器",
+  "version": "1.0.5",
+  "description": "一个功能强大的搜狗搜索测试脚本，支持自定义输出目录、截图功能、通知功能和人工介入。",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["baidu", "google", "sogou", "duckduckgo", "bing"],
+  "tags": ["web", "scraper", "content", "example", "screenshot", "notification", "human-intervention"],
+  "author": "Anbao Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
+    "patchright": "^1.35.0",
+    "typescript": "^5.0.0"
+  }
+}

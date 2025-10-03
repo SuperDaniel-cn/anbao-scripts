@@ -1,0 +1,23 @@
+{
+  "title": "AI 百度搜索参数",
+  "type": "object",
+  "properties": {
+    "api_key": {
+      "type": "string",
+      "format": "password",
+      "title": "1. API Key",
+      "description": "你的 API Key，例如 OpenAI 或任何兼容的 LLM 服务商。"
+    },
+    "base_url": {
+      "type": "string",
+      "title": "2. 自定义端点 (可选)",
+      "description": "如果你使用非 OpenAI 的服务 (如本地模型、Ollama、Groq 等)，请在此处填写 API 的 Base URL。"
+    },
+    "model_name": {
+      "type": "string",
+      "title": "3. 模型名称 (可选)",
+      "description": "要使用的 AI 模型名称，例如 gpt-4-turbo。如果未提供，将使用默认模型。"
+    }
+  },
+  "required": ["api_key"]
+}
