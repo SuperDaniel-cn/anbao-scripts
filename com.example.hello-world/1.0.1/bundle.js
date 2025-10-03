@@ -5,7 +5,7 @@
 // @author      Daniel
 // @description 一个简单的脚本，用于在控制台打印 'Hello World'。
 // @tags        example, hello, test
-// @changelog      初始版本。
+// @changelog   初始版本，支持基本上传功能。
 // @keywords    sogou
 // @engine      patchright
 // @launchOptions { "headless": false, "slowMo": 50 }

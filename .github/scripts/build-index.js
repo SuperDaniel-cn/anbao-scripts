@@ -32,6 +32,9 @@ async function parseMetadata(filePath) {
           case "tags":
             metadata.tags.push(...trimmedValue.split(",").map((t) => t.trim()));
             break;
+          case "changelog":
+            metadata.changelog = trimmedValue;
+            break;
           case "keywords":
             metadata.keywords.push(
               ...trimmedValue.split(",").map((k) => k.trim())
