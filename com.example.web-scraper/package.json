@@ -1,7 +1,7 @@
 {
   "name": "com.example.web-scraper",
   "displayName": "网页内容抓取器",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "一个功能强大的网页内容抓取脚本，支持自定义输出目录、截图功能、通知功能和人工介入。",
   "main": "index.js",
   "scripts": {

@@ -1,50 +1,25 @@
 {
-  "title": "网页内容抓取参数",
+  "title": "百度搜索测试参数",
   "type": "object",
   "properties": {
-    "target_url": {
+    "search_term": {
       "type": "string",
-      "title": "1. 目标网页URL",
-      "description": "要抓取内容的网页地址"
-    },
-    "max_content_length": {
-      "type": "integer",
-      "title": "2. 最大内容长度",
-      "description": "限制抓取的内容最大字符数",
-      "default": 1000
-    },
-    "include_images": {
-      "type": "boolean",
-      "title": "3. 包含图片信息",
-      "description": "是否同时抓取页面中的图片信息",
-      "default": false
-    },
-    "output_format": {
-      "type": "string",
-      "title": "4. 输出格式",
-      "description": "结果文件的输出格式",
-      "enum": ["json", "txt"],
-      "default": "json"
+      "title": "1. 搜索词",
+      "description": "要在百度搜索的关键词"
     },
     "output_directory": {
       "type": "string",
       "format": "directory",
-      "title": "5. 输出目录",
-      "description": "选择保存结果的目录"
-    },
-    "take_screenshot": {
-      "type": "boolean",
-      "title": "6. 截图功能",
-      "description": "是否在抓取内容时截取网页截图",
-      "default": true
+      "title": "2. 输出目录",
+      "description": "选择保存截图的目录"
     },
     "screenshot_format": {
       "type": "string",
-      "title": "7. 截图格式",
+      "title": "3. 截图格式",
       "description": "截图文件的格式",
       "enum": ["png", "jpg"],
       "default": "png"
     }
   },
-  "required": ["target_url"]
+  "required": ["search_term"]
 }
