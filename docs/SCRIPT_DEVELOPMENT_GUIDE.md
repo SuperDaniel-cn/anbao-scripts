@@ -205,6 +205,31 @@ export interface AnbaoContext {
    * }
    */
   forceExit: (errorMessage?: string) => void;
+
+  /**
+   * 请求人工介入 (Human-in-the-Loop)。
+   * 当脚本遇到无法自动处理的情况（如验证码）时，调用此函数。
+   * 它会暂停脚本，发送高优先级通知给用户，并在页面注入一个“继续”按钮。
+   * 用户手动处理完毕后，点击按钮，脚本将从暂停处继续执行。
+   *
+   * @param options 介入请求的配置
+   * @returns {Promise<void>} 一个在用户点击“继续”或超时后完成的 Promise。
+   *
+   * @example
+   * try {
+   *   if (await page.locator('#captcha').isVisible()) {
+   *     throw new AutomationError('Captcha', '检测到验证码，请手动处理。');
+   *   }
+   * } catch (error) {
+   *   if (error instanceof AutomationError) {
+   *     await context.requestHumanIntervention({ message: error.message });
+   *   } else {
+   *     throw error;
+   *   }
+   * }
+   * // 代码将从这里继续
+   */
+  requestHumanIntervention: (options: { message: string; timeout?: number; theme?: 'light' | 'dark' }) => Promise<void>;
 }
 ```
 
