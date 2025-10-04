@@ -2,26 +2,33 @@
   {
     "id": "com.example.web-scraper",
     "name": "网页内容抓取器",
-    "description": "一个功能强大的网页内容抓取脚本，支持自定义输出目录和截图功能。",
+    "description": "一个功能强大的网页内容抓取脚本，支持自定义输出目录、截图功能和通知功能。",
     "author": "Anbao Team",
     "tags": [
       "web",
       "scraper",
       "content",
       "example",
-      "screenshot"
+      "screenshot",
+      "notification"
     ],
     "versions": [
       {
+        "version": "1.0.2",
+        "changelog": "",
+        "published_at": "2025-10-04T15:23:46.517Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.2/bundle.js"
+      },
+      {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-03T16:34:14.926Z",
+        "published_at": "2025-10-04T15:23:46.516Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-03T16:34:14.746Z",
+        "published_at": "2025-10-04T15:23:46.299Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
