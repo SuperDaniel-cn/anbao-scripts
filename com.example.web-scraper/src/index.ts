@@ -9,6 +9,7 @@ export interface AnbaoContext {
     data: string;
   };
   log: (message: string, level?: 'info' | 'warn' | 'error' | 'success') => void;
+  notify: (payload: { title: string; content: string; category?: 'ScriptMessage' | 'TaskResult' }) => void;
   forceExit: (errorMessage?: string) => void;
 }
 
@@ -20,6 +21,13 @@ export interface RunOptions {
 
 export async function run({ page, context }: RunOptions) {
   context.log('开始网页内容抓取任务', 'info');
+  
+  // 发送开始通知
+  context.notify({
+    title: '任务开始',
+    content: 'hello anbao',
+    category: 'ScriptMessage'
+  });
   
   try {
     // 从用户输入中获取参数
@@ -119,6 +127,13 @@ export async function run({ page, context }: RunOptions) {
     
     context.log(`结果已保存到: ${resultFile}`, 'success');
     
+    // 发送完成通知
+    context.notify({
+      title: '任务完成',
+      content: 'hello anbao - 网页内容抓取成功',
+      category: 'TaskResult'
+    });
+    
     return {
       success: true,
       message: '网页内容抓取成功',
@@ -130,6 +145,14 @@ export async function run({ page, context }: RunOptions) {
   } catch (error: any) {
     console.error('抓取过程中发生错误:', error);
     context.log(`抓取失败: ${error.message}`, 'error');
+    
+    // 发送错误通知
+    context.notify({
+      title: '任务失败',
+      content: `hello anbao - 抓取失败: ${error.message}`,
+      category: 'TaskResult'
+    });
+    
     context.forceExit(`抓取失败: ${error.message}`);
   }
 }

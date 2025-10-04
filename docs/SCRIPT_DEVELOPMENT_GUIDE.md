@@ -176,6 +176,25 @@ export interface AnbaoContext {
   log: (message: string, level?: 'info' | 'warn' | 'error' | 'success') => void;
 
   /**
+   * 发送一个系统级通知。
+   * 这将在 Anbao Agent 的通知中心创建一个新的通知，并（如果用户允许）显示一个原生系统通知。
+   *
+   * @example
+   * context.notify({
+   *   title: '下载完成',
+   *   content: '文件 "report.pdf" 已成功下载到您的下载目录。'
+   * });
+   *
+   * // 发送一个与任务结果相关的通知
+   * context.notify({
+   *   title: '任务成功',
+   *   content: 'Bilibili 视频发布任务已成功完成。',
+   *   category: 'TaskResult'
+   * });
+   */
+  notify: (payload: { title: string; content: string; category?: 'ScriptMessage' | 'TaskResult' }) => void;
+
+  /**
    * 强制退出 API。
    * 当脚本遇到可预期的、业务逻辑上的失败时，应调用此函数来优雅地终止任务。
    * 它会向平台报告一个明确的错误信息，而不是抛出一个通用的、未处理的异常。
