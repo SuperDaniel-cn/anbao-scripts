@@ -9,9 +9,15 @@
     ],
     "versions": [
       {
+        "version": "1.0.1",
+        "changelog": "",
+        "published_at": "2025-10-05T12:45:44.804Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.ai-search/1.0.1/bundle.js"
+      },
+      {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.364Z",
+        "published_at": "2025-10-05T12:45:44.619Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.ai-search/1.0.0/bundle.js"
       }
     ]
@@ -28,7 +34,7 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.365Z",
+        "published_at": "2025-10-05T12:45:44.805Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
@@ -51,37 +57,37 @@
       {
         "version": "1.0.5",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.536Z",
+        "published_at": "2025-10-05T12:45:44.809Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.5/bundle.js"
       },
       {
         "version": "1.0.4",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.535Z",
+        "published_at": "2025-10-05T12:45:44.808Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.4/bundle.js"
       },
       {
         "version": "1.0.3",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.535Z",
+        "published_at": "2025-10-05T12:45:44.807Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.3/bundle.js"
       },
       {
         "version": "1.0.2",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.535Z",
+        "published_at": "2025-10-05T12:45:44.807Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.2/bundle.js"
       },
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.534Z",
+        "published_at": "2025-10-05T12:45:44.806Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:39:08.366Z",
+        "published_at": "2025-10-05T12:45:44.806Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
