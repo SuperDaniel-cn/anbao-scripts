@@ -11,13 +11,13 @@
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.804Z",
+        "published_at": "2025-10-05T14:34:09.914Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.ai-search/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.619Z",
+        "published_at": "2025-10-05T14:34:09.787Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.ai-search/1.0.0/bundle.js"
       }
     ]
@@ -34,8 +34,25 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.805Z",
+        "published_at": "2025-10-05T14:34:09.915Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.login/1.0.0/bundle.js"
+      }
+    ]
+  },
+  {
+    "id": "com.anbao.platform-test",
+    "name": "平台功能测试脚本",
+    "description": "测试平台 keyword 功能，支持搜狗和百度，搜狗支持截图，百度支持自定义搜索词，通用通知。",
+    "author": "Anbao Team",
+    "tags": [
+      ""
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "changelog": "",
+        "published_at": "2025-10-05T14:34:09.916Z",
+        "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.anbao.platform-test/1.0.0/bundle.js"
       }
     ]
   },
@@ -57,37 +74,37 @@
       {
         "version": "1.0.5",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.809Z",
+        "published_at": "2025-10-05T14:34:09.919Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.5/bundle.js"
       },
       {
         "version": "1.0.4",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.808Z",
+        "published_at": "2025-10-05T14:34:09.919Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.4/bundle.js"
       },
       {
         "version": "1.0.3",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.807Z",
+        "published_at": "2025-10-05T14:34:09.918Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.3/bundle.js"
       },
       {
         "version": "1.0.2",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.807Z",
+        "published_at": "2025-10-05T14:34:09.917Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.2/bundle.js"
       },
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.806Z",
+        "published_at": "2025-10-05T14:34:09.917Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-05T12:45:44.806Z",
+        "published_at": "2025-10-05T14:34:09.917Z",
         "download_url": "https://raw.githubusercontent.com/SuperDaniel-cn/anbao-scripts/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
