@@ -11,14 +11,14 @@
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.937Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.1/com.anbao.ai-search/1.0.1/bundle.js"
+        "published_at": "2025-10-08T14:53:45.845Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.742Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.0/com.anbao.ai-search/1.0.0/bundle.js"
+        "published_at": "2025-10-08T14:53:45.657Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.0/bundle.js"
       }
     ]
   },
@@ -34,8 +34,8 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.939Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.0/com.anbao.login/1.0.0/bundle.js"
+        "published_at": "2025-10-08T14:53:45.847Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
   },
@@ -51,8 +51,8 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.940Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.0/com.anbao.platform-test/1.0.0/bundle.js"
+        "published_at": "2025-10-08T14:53:45.847Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.platform-test/1.0.0/bundle.js"
       }
     ]
   },
@@ -74,38 +74,38 @@
       {
         "version": "1.0.5",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.944Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.5/com.example.web-scraper/1.0.5/bundle.js"
+        "published_at": "2025-10-08T14:53:45.851Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.5/bundle.js"
       },
       {
         "version": "1.0.4",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.943Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.4/com.example.web-scraper/1.0.4/bundle.js"
+        "published_at": "2025-10-08T14:53:45.850Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.4/bundle.js"
       },
       {
         "version": "1.0.3",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.942Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.3/com.example.web-scraper/1.0.3/bundle.js"
+        "published_at": "2025-10-08T14:53:45.849Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.3/bundle.js"
       },
       {
         "version": "1.0.2",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.942Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.2/com.example.web-scraper/1.0.2/bundle.js"
+        "published_at": "2025-10-08T14:53:45.849Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.2/bundle.js"
       },
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.941Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.1/com.example.web-scraper/1.0.1/bundle.js"
+        "published_at": "2025-10-08T14:53:45.848Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:47:11.941Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@1.0.0/com.example.web-scraper/1.0.0/bundle.js"
+        "published_at": "2025-10-08T14:53:45.848Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
   }
