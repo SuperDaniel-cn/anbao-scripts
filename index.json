@@ -11,13 +11,13 @@
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-08T14:53:45.845Z",
+        "published_at": "2025-10-08T14:58:36.658Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:53:45.657Z",
+        "published_at": "2025-10-08T14:58:36.401Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.0/bundle.js"
       }
     ]
@@ -34,7 +34,7 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:53:45.847Z",
+        "published_at": "2025-10-08T14:58:36.660Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
@@ -51,61 +51,8 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:53:45.847Z",
+        "published_at": "2025-10-08T14:58:36.661Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.platform-test/1.0.0/bundle.js"
-      }
-    ]
-  },
-  {
-    "id": "com.example.web-scraper",
-    "name": "网页内容抓取器",
-    "description": "一个功能强大的搜狗搜索测试脚本，支持自定义输出目录、截图功能、通知功能和人工介入。",
-    "author": "Anbao Team",
-    "tags": [
-      "web",
-      "scraper",
-      "content",
-      "example",
-      "screenshot",
-      "notification",
-      "human-intervention"
-    ],
-    "versions": [
-      {
-        "version": "1.0.5",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.851Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.5/bundle.js"
-      },
-      {
-        "version": "1.0.4",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.850Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.4/bundle.js"
-      },
-      {
-        "version": "1.0.3",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.849Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.3/bundle.js"
-      },
-      {
-        "version": "1.0.2",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.849Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.2/bundle.js"
-      },
-      {
-        "version": "1.0.1",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.848Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.1/bundle.js"
-      },
-      {
-        "version": "1.0.0",
-        "changelog": "",
-        "published_at": "2025-10-08T14:53:45.848Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.example.web-scraper/1.0.0/bundle.js"
       }
     ]
   }
