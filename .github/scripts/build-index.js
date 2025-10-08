@@ -4,7 +4,7 @@ const path = require("path");
 // The script runs from the .github/scripts directory, so we go up two levels
 const SCRIPTS_DIR = path.resolve(__dirname, "../../");
 const PUBLIC_DIR = path.resolve(__dirname, "../../public");
-const REPO_URL = `https://raw.githubusercontent.com/${process.env.GITHUB_REPOSITORY}/main`;
+const REPO_URL = `https://cdn.jsdelivr.net/gh/${process.env.GITHUB_REPOSITORY}`;
 
 async function parseMetadata(filePath) {
   const content = await fs.readFile(filePath, "utf-8");
@@ -117,7 +117,7 @@ async function main() {
         version: semverVersion,
         changelog: metadata.changelog || "",
         published_at: new Date().toISOString(),
-        download_url: `${REPO_URL}/${scriptId}/${version}/bundle.js`,
+        download_url: `${REPO_URL}@${semverVersion}/${scriptId}/${version}/bundle.js`,
       });
     }
 
