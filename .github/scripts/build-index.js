@@ -117,7 +117,7 @@ async function main() {
         version: semverVersion,
         changelog: metadata.changelog || "",
         published_at: new Date().toISOString(),
-        download_url: `https://cdn.jsdelivr.net/gh/${process.env.GITHUB_REPOSITORY}@${semverVersion}/${scriptId}/${version}/bundle.js`,
+        download_url: `https://cdn.jsdelivr.net/gh/${process.env.GITHUB_REPOSITORY}@${process.env.GITHUB_REF}/${scriptId}/${version}/bundle.js`,
       });
     }
 
