@@ -11,13 +11,13 @@
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-08T14:58:36.658Z",
+        "published_at": "2025-10-09T15:44:13.355Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.1/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:58:36.401Z",
+        "published_at": "2025-10-09T15:44:13.336Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.0/bundle.js"
       }
     ]
@@ -34,7 +34,7 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:58:36.660Z",
+        "published_at": "2025-10-09T15:44:13.356Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
@@ -51,7 +51,7 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-08T14:58:36.661Z",
+        "published_at": "2025-10-09T15:44:13.357Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.platform-test/1.0.0/bundle.js"
       }
     ]
