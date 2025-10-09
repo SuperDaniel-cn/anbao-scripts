@@ -8,6 +8,10 @@ async function build() {
     const pkgPath = path.join(__dirname, 'package.json');
     const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8'));
     
+    // 读取 schema.json (如果存在)
+    const schemaPath = path.join(__dirname, 'schema.json');
+    const schema = await fs.readFile(schemaPath, 'utf-8').catch(() => '');
+
     // 构建元数据块
     const banner = `// ==AnbaoScript==
 // @id            ${pkg.name}
@@ -19,6 +23,9 @@ async function build() {
 // @keywords      ${(pkg.keywords || []).join(', ')}
 // @engine        playwright
 // @launchOptions { "headless": false }
+//
+// @schema
+${schema.trim().replace(/^/gm, '// ')}
 // ==/AnbaoScript==`;
     
     // 确保输出目录存在
