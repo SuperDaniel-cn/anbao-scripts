@@ -1,0 +1,34 @@
+{
+  "title": "跨平台视频发布参数",
+  "type": "object",
+  "properties": {
+    "video_file_path": {
+      "type": "string",
+      "format": "file",
+      "title": "1. 本地视频文件"
+    },
+    "video_title": {
+      "type": "string",
+      "title": "2. 视频标题"
+    },
+    "video_description": {
+      "type": "string",
+      "format": "textarea",
+      "title": "3. 视频描述"
+    },
+    "topics": {
+      "type": "string",
+      "title": "4. 话题标签 (用逗号或空格分隔)"
+    },
+    "submit_action": {
+      "type": "string",
+      "title": "5. 提交操作",
+      "enum": ["立即投稿", "存为草稿"],
+      "default": "立即投稿"
+    }
+  },
+  "required": [
+    "video_file_path",
+    "video_title"
+  ]
+}

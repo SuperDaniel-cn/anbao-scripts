@@ -1,0 +1,35 @@
+{
+  "name": "com.anbao.video-uploader",
+  "displayName": "跨平台视频发布助手",
+  "version": "1.0.0",
+  "author": "Roo",
+  "description": "一键将本地视频发布到多个受支持的平台，如 Bilibili、抖音、小红书、视频号、快手、微博等。",
+  "tags": [
+    "视频发布",
+    "多平台"
+  ],
+  "keywords": [
+    "bilibili",
+    "douyin",
+    "xiaohongshu",
+    "wechat",
+    "kuaishou",
+    "weibo"
+  ],
+  "engine": "patchright",
+  "launchOptions": {
+    "channel": "chrome"
+  },
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
+    "playwright": "^1.35.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "patchright": "^1.56.0"
+  }
+}

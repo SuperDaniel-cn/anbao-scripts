@@ -8,10 +8,13 @@ async function build() {
     const pkgPath = path.join(__dirname, 'package.json');
     const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8'));
     
-    // 读取 schema.json
+    // 读取 schema.json (如果存在)
     const schemaPath = path.join(__dirname, 'schema.json');
     const schema = await fs.readFile(schemaPath, 'utf-8').catch(() => '');
-    
+
+    // 动态构建 launchOptions 字符串
+    const launchOptions = pkg.launchOptions ? JSON.stringify(pkg.launchOptions) : '';
+
     // 构建元数据块
     const banner = `// ==AnbaoScript==
 // @id            ${pkg.name}
@@ -21,8 +24,8 @@ async function build() {
 // @description   ${pkg.description || ''}
 // @tags          ${(pkg.tags || []).join(', ')}
 // @keywords      ${(pkg.keywords || []).join(', ')}
-// @engine        playwright
-// @launchOptions { "headless": false }
+// @engine        ${pkg.engine || 'playwright'}
+${launchOptions ? `// @launchOptions ${launchOptions}` : ''}
 //
 // @schema
 ${schema.trim().replace(/^/gm, '// ')}
@@ -35,7 +38,6 @@ ${schema.trim().replace(/^/gm, '// ')}
     // 执行 esbuild 构建
     console.log('正在构建脚本...');
     
-    // 使用 esbuild 的 JavaScript API 而不是命令行
     const esbuild = require('esbuild');
     
     await esbuild.build({
@@ -48,7 +50,7 @@ ${schema.trim().replace(/^/gm, '// ')}
       }
     });
     
-    console.log(`构建完成！输出文件: ${outputDir}/bundle.js`);
+    console.log(`构建完成！输出文件: ${path.join(outputDir, 'bundle.js')}`);
     
   } catch (error) {
     console.error('构建失败:', error);
