@@ -1,28 +1,5 @@
 [
   {
-    "id": "com.anbao.ai-search",
-    "name": "AI 百度搜索",
-    "description": "使用 AI 代理在百度搜索指定内容。",
-    "author": "Anbao Team",
-    "tags": [
-      ""
-    ],
-    "versions": [
-      {
-        "version": "1.0.1",
-        "changelog": "",
-        "published_at": "2025-10-09T15:44:13.355Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.1/bundle.js"
-      },
-      {
-        "version": "1.0.0",
-        "changelog": "",
-        "published_at": "2025-10-09T15:44:13.336Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.ai-search/1.0.0/bundle.js"
-      }
-    ]
-  },
-  {
     "id": "com.anbao.login",
     "name": "Interactive Login",
     "description": "An internal script to launch a browser for manual user interaction, like logging in.",
@@ -34,25 +11,26 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-09T15:44:13.356Z",
+        "published_at": "2025-10-10T11:39:14.626Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
   },
   {
-    "id": "com.anbao.platform-test",
-    "name": "平台功能测试脚本",
-    "description": "测试平台 keyword 功能，支持搜狗和百度，搜狗支持截图，百度支持自定义搜索词，通用通知。",
-    "author": "Anbao Team",
+    "id": "com.anbao.video-uploader",
+    "name": "跨平台视频发布助手",
+    "description": "一键将本地视频发布到多个受支持的平台，如 Bilibili、抖音、小红书、视频号、快手、微博等。",
+    "author": "Roo",
     "tags": [
-      ""
+      "视频发布",
+      "多平台"
     ],
     "versions": [
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-09T15:44:13.357Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.platform-test/1.0.0/bundle.js"
+        "published_at": "2025-10-10T11:39:14.627Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.0.0/bundle.js"
       }
     ]
   }
