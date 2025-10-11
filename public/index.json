@@ -11,25 +11,35 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-10T11:39:14.626Z",
+        "published_at": "2025-10-11T03:11:24.446Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
   },
   {
     "id": "com.anbao.video-uploader",
-    "name": "跨平台视频发布助手",
-    "description": "一键将本地视频发布到多个受支持的平台，如 Bilibili、抖音、小红书、视频号、快手、微博等。",
-    "author": "Roo",
+    "name": "跨平台视频发布助手 (标杆脚本)",
+    "description": "【标杆脚本】一键将本地视频发布到多个平台。此脚本展示了包括人性化交互、平台专属选项、多级重试和后置验证在内的所有最佳实践。",
+    "author": "Anbao Team (Roo)",
     "tags": [
       "视频发布",
-      "多平台"
+      "多平台",
+      "标杆脚本",
+      "自动化",
+      "bilibili",
+      "douyin"
     ],
     "versions": [
       {
+        "version": "1.1.0",
+        "changelog": "",
+        "published_at": "2025-10-11T03:11:24.586Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.1.0/bundle.js"
+      },
+      {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-10T11:39:14.627Z",
+        "published_at": "2025-10-11T03:11:24.447Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.0.0/bundle.js"
       }
     ]
