@@ -153,7 +153,10 @@ async function upload({
   }, "选择并上传视频文件");
 
   const timeoutMs = (upload_timeout_minutes || 30) * 60 * 1000;
-  context.log(`等待视频处理完成 (超时时间: ${upload_timeout_minutes || 30} 分钟)...`, "info");
+  context.log(
+    `等待视频处理完成 (超时时间: ${upload_timeout_minutes || 30} 分钟)...`,
+    "info"
+  );
   await doAction(
     () =>
       page
@@ -176,7 +179,12 @@ async function upload({
     for (let i = 0; i < 3; i++) {
       const timeout = initialTimeout * Math.pow(2, i);
       try {
-        context.log(`正在等待“更换封面”按钮... (尝试 ${i + 1}/3, 超时: ${timeout / 1000}s)`, "info");
+        context.log(
+          `正在等待“更换封面”按钮... (尝试 ${i + 1}/3, 超时: ${
+            timeout / 1000
+          }s)`,
+          "info"
+        );
         await page.getByText("更换封面").waitFor({ state: "visible", timeout });
         context.log("“更换封面”按钮已出现。", "success");
         buttonVisible = true;
@@ -189,17 +197,34 @@ async function upload({
     }
 
     if (!buttonVisible) {
-      throw new PlatformError("视频上传成功，但“更换封面”按钮长时间未出现，无法上传封面。");
+      throw new PlatformError(
+        "视频上传成功，但“更换封面”按钮长时间未出现，无法上传封面。"
+      );
     }
 
     await doAction(async () => {
-      const fileChooserPromise = page.waitForEvent("filechooser");
+      context.log("开始上传封面流程...", "info");
+      
+      // 1. 点击“更换封面”
       await humanClick(page.getByText("更换封面"));
-      const fileChooser = await fileChooserPromise;
-      await fileChooser.setFiles(cover_file_path);
+      
+      // 2. 在弹出的模态框中点击“上传封面”
+      await humanClick(page.getByText("上传封面"));
+
+      // 3. 使用 setInputFiles 与“上传图片”按钮交互
+      const uploadButton = page.getByRole('button', { name: '上传图片' });
+      await uploadButton.setInputFiles(cover_file_path);
+
+      // 4. 等待上传和裁剪完成，点击“完成”
+      const doneButton = page.getByRole('button', { name: '完成' });
+      await doneButton.waitFor({ state: 'visible', timeout: 60000 });
+      await humanClick(doneButton);
+
+      // 5. 验证封面是否上传成功
       await page
         .locator(".cover-upload-success-tip")
         .waitFor({ state: "visible", timeout: 60000 });
+
     }, "上传并设置视频封面");
   }
 
@@ -221,7 +246,9 @@ async function upload({
   const topicList = topics ? topics.split(/[\s,，]+/).filter(Boolean) : [];
   if (topicList.length > 0) {
     await doAction(async () => {
-      const tagInput = page.getByRole("textbox", { name: "按回车键Enter创建标签" });
+      const tagInput = page.getByRole("textbox", {
+        name: "按回车键Enter创建标签",
+      });
       await humanClick(tagInput);
       const getRemainingSlots = async (): Promise<number | null> => {
         try {
@@ -232,7 +259,9 @@ async function upload({
             return match ? parseInt(match[1], 10) : null;
           }
           return null;
-        } catch (e) { return null; }
+        } catch (e) {
+          return null;
+        }
       };
       const initialSlots = await getRemainingSlots();
       if (initialSlots !== null && initialSlots < 10) {
@@ -252,7 +281,8 @@ async function upload({
         await tagInput.fill(topic);
         await tagInput.press("Enter");
         await page.waitForFunction(
-          (expected) => document.body.innerText.includes(`还可以添加${expected}个标签`),
+          (expected) =>
+            document.body.innerText.includes(`还可以添加${expected}个标签`),
           slotsBeforeAdd! - 1,
           { timeout: 5000 }
         );
@@ -268,16 +298,24 @@ async function upload({
     await randomDelay(300, 500);
     await humanClick(page.getByTitle(targetCategory));
     await randomDelay(100, 200);
-    const selectedText = await page.locator(".select-item-cont-inserted").textContent();
+    const selectedText = await page
+      .locator(".select-item-cont-inserted")
+      .textContent();
     if (selectedText?.trim() !== targetCategory) {
-      throw new Error(`分区选择失败，期望选择 "${targetCategory}"，实际为 "${selectedText}"`);
+      throw new Error(
+        `分区选择失败，期望选择 "${targetCategory}"，实际为 "${selectedText}"`
+      );
     }
   }, `选择视频分区: ${bilibili_category || "知识"}`);
 
   // --- 7. 填写简介 ---
   if (video_description) {
     await doAction(
-      () => page.locator('.ql-editor[contenteditable="true"]').first().fill(video_description),
+      () =>
+        page
+          .locator('.ql-editor[contenteditable="true"]')
+          .first()
+          .fill(video_description),
       "填写视频简介"
     );
   }
@@ -289,27 +327,35 @@ async function upload({
       context.log("已开启定时发布功能。", "info");
       if (bilibili_schedule_time) {
         const scheduleDate = new Date(bilibili_schedule_time);
-        const dateStr = scheduleDate.toISOString().split('T')[0];
+        const dateStr = scheduleDate.toISOString().split("T")[0];
         const timeStr = scheduleDate.toTimeString().substring(0, 5);
 
         // 设置日期
-        await humanClick(page.locator('.date-picker-date'));
+        await humanClick(page.locator(".date-picker-date"));
         await randomDelay(200, 400);
-        await page.evaluate(([date]) => {
-            const spans = Array.from(document.querySelectorAll('.mx-calendar-content span')) as HTMLElement[];
-            const target = spans.find(s => s.title === date);
+        await page.evaluate(
+          ([date]) => {
+            const spans = Array.from(
+              document.querySelectorAll(".mx-calendar-content span")
+            ) as HTMLElement[];
+            const target = spans.find((s) => s.title === date);
             if (target) target.click();
-        }, [dateStr]);
-        
+          },
+          [dateStr]
+        );
+
         // 设置时间
-        await humanClick(page.locator('.time-picker-time'));
+        await humanClick(page.locator(".time-picker-time"));
         await randomDelay(200, 400);
-        await page.evaluate(([time]) => {
-            const target = Array.from(document.querySelectorAll('.time-select-item')).find(
-                (item) => item.textContent?.trim() === time
-            );
+        await page.evaluate(
+          ([time]) => {
+            const target = Array.from(
+              document.querySelectorAll(".time-select-item")
+            ).find((item) => item.textContent?.trim() === time);
             if (target) (target as HTMLElement).click();
-        }, [timeStr]);
+          },
+          [timeStr]
+        );
 
         context.log(`已设置发布时间为: ${dateStr} ${timeStr}`, "success");
       }
