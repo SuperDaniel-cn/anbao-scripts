@@ -11,7 +11,7 @@
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-11T03:14:39.805Z",
+        "published_at": "2025-10-11T03:39:45.518Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.login/1.0.0/bundle.js"
       }
     ]
@@ -31,15 +31,21 @@
     ],
     "versions": [
       {
+        "version": "1.2.0",
+        "changelog": "",
+        "published_at": "2025-10-11T03:39:45.687Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.2.0/bundle.js"
+      },
+      {
         "version": "1.1.0",
         "changelog": "",
-        "published_at": "2025-10-11T03:14:39.828Z",
+        "published_at": "2025-10-11T03:39:45.686Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.1.0/bundle.js"
       },
       {
         "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-11T03:14:39.806Z",
+        "published_at": "2025-10-11T03:39:45.520Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.0.0/bundle.js"
       }
     ]
