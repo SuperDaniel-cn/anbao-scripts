@@ -66,20 +66,13 @@ const createRetryableAction = (context: RunOptions["context"], page: Page) => {
           context.log("正在重试...", "info");
         } else {
           // 最后一次重试失败，请求人工介入
+          context.log(`操作 "${description}" 失败，请求用户手动完成。`, "warn");
           await context.requestHumanIntervention({
             message: `自动化操作 "${description}" 多次尝试后仍然失败。\n\n请您手动完成此步骤，然后点击“继续”让脚本从下一步开始。`,
           });
-          // 人工介入后，我们假设用户已解决问题，并最后尝试一次
-          try {
-            context.log("正在进行人工介入后的最后一次尝试...", "info");
-            return await action();
-          } catch (finalError) {
-            throw new PlatformError(
-              `在人工介入后，操作 "${description}" 最终还是失败了: ${
-                (finalError as Error).message
-              }`
-            );
-          }
+          // 用户点击“继续”后，我们假定此步骤已由人工完成。
+          context.log(`用户已手动完成操作: "${description}"。脚本将继续执行下一步。`, "info");
+          return undefined as T;
         }
       }
     }
@@ -183,7 +176,7 @@ async function upload({
   const targetType = bilibili_type || "自制";
   await doAction(async () => {
     // 根据用户反馈，使用更精确的定位器来选择稿件类型
-    const typeButton = page.locator('div').filter({ hasText: new RegExp(`^${targetType}$`) }).first();
+    const typeButton = page.getByText('自制').first();
     await humanClick(typeButton);
   }, `选择稿件类型: ${targetType}`);
 

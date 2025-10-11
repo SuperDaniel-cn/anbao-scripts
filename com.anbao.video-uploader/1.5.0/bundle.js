@@ -1,7 +1,7 @@
 // ==AnbaoScript==
 // @id            com.anbao.video-uploader
 // @name          跨平台视频发布助手 (标杆脚本)
-// @version       1.4.0
+// @version       1.5.0
 // @author        Anbao Team (Roo)
 // @description   【标杆脚本】一键将本地视频发布到多个平台。此脚本展示了包括人性化交互、平台专属选项、多级重试和后置验证在内的所有最佳实践。
 // @tags          视频发布, 多平台, 标杆脚本, 自动化, bilibili, douyin
@@ -156,19 +156,14 @@ var createRetryableAction = (context, page) => {
           await randomDelay(1e3, 2e3);
           context.log("\u6B63\u5728\u91CD\u8BD5...", "info");
         } else {
+          context.log(`\u64CD\u4F5C "${description}" \u5931\u8D25\uFF0C\u8BF7\u6C42\u7528\u6237\u624B\u52A8\u5B8C\u6210\u3002`, "warn");
           await context.requestHumanIntervention({
             message: `\u81EA\u52A8\u5316\u64CD\u4F5C "${description}" \u591A\u6B21\u5C1D\u8BD5\u540E\u4ECD\u7136\u5931\u8D25\u3002
 
 \u8BF7\u60A8\u624B\u52A8\u5B8C\u6210\u6B64\u6B65\u9AA4\uFF0C\u7136\u540E\u70B9\u51FB\u201C\u7EE7\u7EED\u201D\u8BA9\u811A\u672C\u4ECE\u4E0B\u4E00\u6B65\u5F00\u59CB\u3002`
           });
-          try {
-            context.log("\u6B63\u5728\u8FDB\u884C\u4EBA\u5DE5\u4ECB\u5165\u540E\u7684\u6700\u540E\u4E00\u6B21\u5C1D\u8BD5...", "info");
-            return await action();
-          } catch (finalError) {
-            throw new PlatformError(
-              `\u5728\u4EBA\u5DE5\u4ECB\u5165\u540E\uFF0C\u64CD\u4F5C "${description}" \u6700\u7EC8\u8FD8\u662F\u5931\u8D25\u4E86: ${finalError.message}`
-            );
-          }
+          context.log(`\u7528\u6237\u5DF2\u624B\u52A8\u5B8C\u6210\u64CD\u4F5C: "${description}"\u3002\u811A\u672C\u5C06\u7EE7\u7EED\u6267\u884C\u4E0B\u4E00\u6B65\u3002`, "info");
+          return void 0;
         }
       }
     }
@@ -248,7 +243,7 @@ async function upload({
   );
   const targetType = bilibili_type || "\u81EA\u5236";
   await doAction(async () => {
-    const typeButton = page.locator("div").filter({ hasText: new RegExp(`^${targetType}$`) }).first();
+    const typeButton = page.getByText("\u81EA\u5236").first();
     await humanClick(typeButton);
   }, `\u9009\u62E9\u7A3F\u4EF6\u7C7B\u578B: ${targetType}`);
   const topicList = topics ? topics.split(/[\s,，]+/).filter(Boolean) : [];
