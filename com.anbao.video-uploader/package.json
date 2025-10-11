@@ -1,7 +1,7 @@
 {
   "name": "com.anbao.video-uploader",
   "displayName": "跨平台视频发布助手 (标杆脚本)",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "Anbao Team (Roo)",
   "description": "【标杆脚本】一键将本地视频发布到多个平台。此脚本展示了包括人性化交互、平台专属选项、多级重试和后置验证在内的所有最佳实践。",
   "tags": [

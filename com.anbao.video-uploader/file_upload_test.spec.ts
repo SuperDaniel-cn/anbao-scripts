@@ -20,7 +20,6 @@ test.describe("Bilibili Full E2E Test", () => {
 
     const page = await browserContext.newPage();
 
-
     // Mock the Anbao Context
     const mockContext: RunOptions["context"] = {
       common: {

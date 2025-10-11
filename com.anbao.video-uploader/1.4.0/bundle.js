@@ -1,7 +1,7 @@
 // ==AnbaoScript==
 // @id            com.anbao.video-uploader
 // @name          跨平台视频发布助手 (标杆脚本)
-// @version       1.1.0
+// @version       1.4.0
 // @author        Anbao Team (Roo)
 // @description   【标杆脚本】一键将本地视频发布到多个平台。此脚本展示了包括人性化交互、平台专属选项、多级重试和后置验证在内的所有最佳实践。
 // @tags          视频发布, 多平台, 标杆脚本, 自动化, bilibili, douyin
@@ -18,11 +18,6 @@
 //       "type": "string",
 //       "format": "file",
 //       "title": "1. 本地视频文件"
-//     },
-//     "cover_file_path": {
-//       "type": "string",
-//       "format": "file",
-//       "title": "2. 视频封面 (可选)"
 //     },
 //     "video_title": {
 //       "type": "string",
@@ -66,12 +61,17 @@
 //     "submit_action": {
 //       "type": "string",
 //       "title": "10. 提交操作",
-//       "enum": ["立即投稿", "存为草稿"],
-//       "default": "存为草稿"
+//       "enum": ["立即投稿", "存草稿"],
+//       "default": "存草稿"
+//     },
+//     "manual_audit_required": {
+//       "type": "boolean",
+//       "title": "11. 开启人工审核 (提交前暂停)",
+//       "default": true
 //     },
 //     "upload_timeout_minutes": {
 //       "type": "number",
-//       "title": "11. 上传超时时间 (分钟)",
+//       "title": "12. 上传超时时间 (分钟)",
 //       "default": 30
 //     }
 //   },
@@ -126,11 +126,17 @@ var randomDelay = (min = 500, max = 1200) => {
     (resolve) => setTimeout(resolve, Math.random() * (max - min) + min)
   );
 };
+var humanClick = async (locator, options) => {
+  await locator.hover({ trial: true });
+  await randomDelay(200, 500);
+  await locator.click(options);
+};
 var humanType = async (page, selector, text) => {
-  await page.locator(selector).click({ delay: Math.random() * 200 + 50 });
-  await page.locator(selector).fill("");
+  const locator = page.locator(selector);
+  await humanClick(locator);
+  await locator.fill("");
   await randomDelay(100, 200);
-  await page.locator(selector).type(text, { delay: Math.random() * 150 + 50 });
+  await locator.type(text, { delay: Math.random() * 150 + 50 });
 };
 var createRetryableAction = (context, page) => {
   return async (action, description, retryCount = 2) => {
@@ -200,7 +206,6 @@ async function upload({
   const { common } = context;
   const {
     video_file_path,
-    cover_file_path,
     video_title,
     video_description,
     topics,
@@ -209,7 +214,8 @@ async function upload({
     bilibili_type,
     bilibili_schedule_enabled,
     bilibili_schedule_time,
-    upload_timeout_minutes
+    upload_timeout_minutes,
+    manual_audit_required
   } = common;
   await doAction(
     () => page.goto("https://member.bilibili.com/platform/upload/video/frame", {
@@ -219,12 +225,15 @@ async function upload({
   );
   await doAction(async () => {
     const fileChooserPromise = page.waitForEvent("filechooser");
-    await page.locator(".bcc-upload-wrapper").click();
+    await humanClick(page.locator(".bcc-upload-wrapper"));
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(video_file_path);
   }, "\u9009\u62E9\u5E76\u4E0A\u4F20\u89C6\u9891\u6587\u4EF6");
   const timeoutMs = (upload_timeout_minutes || 30) * 60 * 1e3;
-  context.log(`\u7B49\u5F85\u89C6\u9891\u5904\u7406\u5B8C\u6210 (\u8D85\u65F6\u65F6\u95F4: ${upload_timeout_minutes || 30} \u5206\u949F)...`, "info");
+  context.log(
+    `\u7B49\u5F85\u89C6\u9891\u5904\u7406\u5B8C\u6210 (\u8D85\u65F6\u65F6\u95F4: ${upload_timeout_minutes || 30} \u5206\u949F)...`,
+    "info"
+  );
   await doAction(
     () => page.getByText("\u4E0A\u4F20\u5B8C\u6210").nth(1).waitFor({ state: "visible", timeout: timeoutMs }),
     "\u7B49\u5F85\u201C\u4E0A\u4F20\u5B8C\u6210\u201D\u72B6\u6001\u51FA\u73B0"
@@ -232,50 +241,23 @@ async function upload({
   context.log("\u89C6\u9891\u5904\u7406\u5B8C\u6210\u3002", "success");
   context.log("\u7B49\u5F85 3 \u79D2\uFF0C\u4EE5\u786E\u4FDD\u9875\u9762\u5143\u7D20\u52A0\u8F7D\u5B8C\u6210...", "info");
   await randomDelay(3e3, 3500);
-  if (cover_file_path) {
-    context.log("\u51C6\u5907\u4E0A\u4F20\u5C01\u9762\uFF0C\u6B63\u5728\u7B49\u5F85\u201C\u66F4\u6362\u5C01\u9762\u201D\u6309\u94AE\u51FA\u73B0...", "info");
-    let buttonVisible = false;
-    const initialTimeout = 3e4;
-    for (let i = 0; i < 3; i++) {
-      const timeout = initialTimeout * Math.pow(2, i);
-      try {
-        context.log(`\u6B63\u5728\u7B49\u5F85\u201C\u66F4\u6362\u5C01\u9762\u201D\u6309\u94AE... (\u5C1D\u8BD5 ${i + 1}/3, \u8D85\u65F6: ${timeout / 1e3}s)`, "info");
-        await page.getByText("\u66F4\u6362\u5C01\u9762").waitFor({ state: "visible", timeout });
-        context.log("\u201C\u66F4\u6362\u5C01\u9762\u201D\u6309\u94AE\u5DF2\u51FA\u73B0\u3002", "success");
-        buttonVisible = true;
-        break;
-      } catch (e) {
-        if (i < 2) {
-          context.log(`\u7B49\u5F85\u201C\u66F4\u6362\u5C01\u9762\u201D\u6309\u94AE\u8D85\u65F6\uFF0C\u5C06\u8FDB\u884C\u4E0B\u4E00\u6B21\u5C1D\u8BD5...`, "warn");
-        }
-      }
-    }
-    if (!buttonVisible) {
-      throw new PlatformError("\u89C6\u9891\u4E0A\u4F20\u6210\u529F\uFF0C\u4F46\u201C\u66F4\u6362\u5C01\u9762\u201D\u6309\u94AE\u957F\u65F6\u95F4\u672A\u51FA\u73B0\uFF0C\u65E0\u6CD5\u4E0A\u4F20\u5C01\u9762\u3002");
-    }
-    await doAction(async () => {
-      const fileChooserPromise = page.waitForEvent("filechooser");
-      await page.getByText("\u66F4\u6362\u5C01\u9762").click();
-      const fileChooser = await fileChooserPromise;
-      await fileChooser.setFiles(cover_file_path);
-      await page.locator(".cover-upload-success-tip").waitFor({ state: "visible", timeout: 6e4 });
-    }, "\u4E0A\u4F20\u5E76\u8BBE\u7F6E\u89C6\u9891\u5C01\u9762");
-  }
   const titleSelector = 'input[placeholder="\u8BF7\u8F93\u5165\u7A3F\u4EF6\u6807\u9898"]';
   await doAction(
     () => humanType(page, titleSelector, video_title),
     "\u586B\u5199\u89C6\u9891\u6807\u9898"
   );
   const targetType = bilibili_type || "\u81EA\u5236";
-  await doAction(
-    () => page.getByText(targetType, { exact: true }).first().click(),
-    `\u9009\u62E9\u7A3F\u4EF6\u7C7B\u578B: ${targetType}`
-  );
+  await doAction(async () => {
+    const typeButton = page.locator("div").filter({ hasText: new RegExp(`^${targetType}$`) }).first();
+    await humanClick(typeButton);
+  }, `\u9009\u62E9\u7A3F\u4EF6\u7C7B\u578B: ${targetType}`);
   const topicList = topics ? topics.split(/[\s,，]+/).filter(Boolean) : [];
   if (topicList.length > 0) {
     await doAction(async () => {
-      const tagInput = page.getByRole("textbox", { name: "\u6309\u56DE\u8F66\u952EEnter\u521B\u5EFA\u6807\u7B7E" });
-      await tagInput.click();
+      const tagInput = page.getByRole("textbox", {
+        name: "\u6309\u56DE\u8F66\u952EEnter\u521B\u5EFA\u6807\u7B7E"
+      });
+      await humanClick(tagInput);
       const getRemainingSlots = async () => {
         try {
           const locator = page.getByText(/还可以添加\d+个标签/);
@@ -317,13 +299,15 @@ async function upload({
   }
   await doAction(async () => {
     const targetCategory = bilibili_category || "\u77E5\u8BC6";
-    await page.locator(".select-controller").first().click();
+    await humanClick(page.locator(".select-controller").first());
     await randomDelay(300, 500);
-    await page.getByTitle(targetCategory).click();
+    await humanClick(page.getByTitle(targetCategory));
     await randomDelay(100, 200);
     const selectedText = await page.locator(".select-item-cont-inserted").textContent();
     if (selectedText?.trim() !== targetCategory) {
-      throw new Error(`\u5206\u533A\u9009\u62E9\u5931\u8D25\uFF0C\u671F\u671B\u9009\u62E9 "${targetCategory}"\uFF0C\u5B9E\u9645\u4E3A "${selectedText}"`);
+      throw new Error(
+        `\u5206\u533A\u9009\u62E9\u5931\u8D25\uFF0C\u671F\u671B\u9009\u62E9 "${targetCategory}"\uFF0C\u5B9E\u9645\u4E3A "${selectedText}"`
+      );
     }
   }, `\u9009\u62E9\u89C6\u9891\u5206\u533A: ${bilibili_category || "\u77E5\u8BC6"}`);
   if (video_description) {
@@ -334,42 +318,67 @@ async function upload({
   }
   if (bilibili_schedule_enabled) {
     await doAction(async () => {
-      await page.locator(".switch-container").first().click();
+      await humanClick(page.locator(".switch-container").first());
       context.log("\u5DF2\u5F00\u542F\u5B9A\u65F6\u53D1\u5E03\u529F\u80FD\u3002", "info");
       if (bilibili_schedule_time) {
         const scheduleDate = new Date(bilibili_schedule_time);
         const dateStr = scheduleDate.toISOString().split("T")[0];
         const timeStr = scheduleDate.toTimeString().substring(0, 5);
-        await page.locator(".date-picker-date").click();
+        await humanClick(page.locator(".date-picker-date"));
         await randomDelay(200, 400);
-        await page.evaluate(([date]) => {
-          const spans = Array.from(document.querySelectorAll(".mx-calendar-content span"));
-          const target = spans.find((s) => s.title === date);
-          if (target)
-            target.click();
-        }, [dateStr]);
-        await page.locator(".time-picker-time").click();
+        await page.evaluate(
+          ([date]) => {
+            const spans = Array.from(
+              document.querySelectorAll(".mx-calendar-content span")
+            );
+            const target = spans.find((s) => s.title === date);
+            if (target)
+              target.click();
+          },
+          [dateStr]
+        );
+        await humanClick(page.locator(".time-picker-time"));
         await randomDelay(200, 400);
-        await page.evaluate(([time]) => {
-          const target = Array.from(document.querySelectorAll(".time-select-item")).find(
-            (item) => item.textContent?.trim() === time
-          );
-          if (target)
-            target.click();
-        }, [timeStr]);
+        await page.evaluate(
+          ([time]) => {
+            const target = Array.from(
+              document.querySelectorAll(".time-select-item")
+            ).find((item) => item.textContent?.trim() === time);
+            if (target)
+              target.click();
+          },
+          [timeStr]
+        );
         context.log(`\u5DF2\u8BBE\u7F6E\u53D1\u5E03\u65F6\u95F4\u4E3A: ${dateStr} ${timeStr}`, "success");
       }
     }, "\u8BBE\u7F6E\u5B9A\u65F6\u53D1\u5E03\u65F6\u95F4");
   }
-  context.log("\u6240\u6709\u4FE1\u606F\u586B\u5199\u5B8C\u6BD5\uFF0C\u51C6\u5907\u63D0\u4EA4\u3002", "info");
-  const submitText = submit_action === "\u5B58\u8349\u7A3F" ? "\u5B58\u8349\u7A3F" : "\u7ACB\u5373\u6295\u7A3F";
-  await doAction(
-    () => page.getByText(submitText).click(),
-    `\u70B9\u51FB\u201C${submitText}\u201D\u6309\u94AE`
-  );
-  if (submit_action === "\u5B58\u8349\u7A3F") {
-    context.log("\u5DF2\u5B58\u4E3A\u8349\u7A3F\uFF0C\u4EFB\u52A1\u7ED3\u675F\u3002", "success");
-    return { postUrl: "draft" };
+  if (manual_audit_required) {
+    context.log("\u6240\u6709\u4FE1\u606F\u5DF2\u586B\u5199\u5B8C\u6BD5\uFF0C\u8FDB\u5165\u4EBA\u5DE5\u5BA1\u6838\u6A21\u5F0F...", "info");
+    while (true) {
+      await context.requestHumanIntervention({
+        message: "\u8BF7\u60A8\u5BA1\u6838\u540E\uFF0C\u624B\u52A8\u70B9\u51FB\u2018\u7ACB\u5373\u6295\u7A3F\u2019\u6216\u2018\u5B58\u4E3A\u8349\u7A3F\u2019\uFF0C\u7136\u540E\u70B9\u51FB\u4E0B\u65B9\u7684\u201C\u7EE7\u7EED\u201D\u6309\u94AE\u3002"
+      });
+      context.log("\u4EBA\u5DE5\u5BA1\u6838\u201C\u7EE7\u7EED\u201D\u88AB\u70B9\u51FB\uFF0C\u6B63\u5728\u6821\u9A8C\u63D0\u4EA4\u72B6\u6001...", "info");
+      const titleInputStillVisible = await page.locator('input[placeholder="\u8BF7\u8F93\u5165\u7A3F\u4EF6\u6807\u9898"]').isVisible();
+      if (titleInputStillVisible) {
+        context.log("\u68C0\u6D4B\u5230\u8868\u5355\u4ECD\u672A\u63D0\u4EA4\uFF0C\u5C06\u518D\u6B21\u8BF7\u6C42\u4EBA\u5DE5\u4ECB\u5165\u3002\u8BF7\u52A1\u5FC5\u5148\u5728\u9875\u9762\u4E0A\u70B9\u51FB\u63D0\u4EA4\u6309\u94AE\u3002", "warn");
+      } else {
+        context.log("\u8868\u5355\u5DF2\u63D0\u4EA4\uFF0C\u4EFB\u52A1\u6B63\u5E38\u7ED3\u675F\u3002", "success");
+        return { postUrl: "submitted_by_user" };
+      }
+    }
+  } else {
+    context.log("\u6240\u6709\u4FE1\u606F\u586B\u5199\u5B8C\u6BD5\uFF0C\u51C6\u5907\u81EA\u52A8\u63D0\u4EA4\u3002", "info");
+    const submitText = submit_action === "\u5B58\u8349\u7A3F" ? "\u5B58\u4E3A\u8349\u7A3F" : "\u7ACB\u5373\u6295\u7A3F";
+    await doAction(
+      () => humanClick(page.getByText(submitText)),
+      `\u70B9\u51FB\u201C${submitText}\u201D\u6309\u94AE`
+    );
+    if (submit_action === "\u5B58\u8349\u7A3F") {
+      context.log("\u5DF2\u81EA\u52A8\u5B58\u4E3A\u8349\u7A3F\uFF0C\u4EFB\u52A1\u7ED3\u675F\u3002", "success");
+      return { postUrl: "draft" };
+    }
   }
   await doAction(
     () => page.waitForURL("**/creative-result-succeed/**", { timeout: 12e4 }),
@@ -388,33 +397,30 @@ async function upload({
   return { postUrl: fullUrl };
 }
 async function verify({ page, context }, { postUrl }) {
-  if (postUrl === "draft") {
-    context.log("\u64CD\u4F5C\u4E3A\u5B58\u4E3A\u8349\u7A3F\uFF0C\u8DF3\u8FC7\u540E\u7F6E\u9A8C\u8BC1\u3002", "info");
+  if (postUrl === "draft" || postUrl === "submitted_by_user" || postUrl === "pending_manual_action") {
+    context.log("\u64CD\u4F5C\u4E3A\u5B58\u4E3A\u8349\u7A3F\u6216\u4EBA\u5DE5\u63D0\u4EA4\uFF0C\u8DF3\u8FC7\u540E\u7F6E\u9A8C\u8BC1\u3002", "info");
     return true;
   }
   context.log("\u6B63\u5728\u6267\u884C\u53D1\u5E03\u540E\u9A8C\u8BC1...", "info");
-  if (!postUrl) {
-    context.log("\u65E0 postUrl\uFF0C\u8DF3\u8FC7\u9A8C\u8BC1\u3002", "warn");
-    return false;
-  }
-  try {
-    await page.goto(postUrl, { waitUntil: "networkidle" });
-    await randomDelay(2e3, 3e3);
-    const pageTitle = await page.title();
-    if (pageTitle.includes(context.common.video_title)) {
-      context.log("\u9A8C\u8BC1\u6210\u529F: \u9875\u9762\u6807\u9898\u5305\u542B\u89C6\u9891\u6807\u9898\u3002", "success");
+  await page.goto("https://member.bilibili.com/platform/upload-manager/article", { waitUntil: "networkidle" });
+  const initialTimeout = 3e4;
+  for (let i = 0; i < 3; i++) {
+    const timeout = initialTimeout * Math.pow(2, i);
+    try {
+      context.log(`\u6B63\u5728\u7A3F\u4EF6\u7BA1\u7406\u9875\u9762\u67E5\u627E\u89C6\u9891... (\u5C1D\u8BD5 ${i + 1}/3, \u8D85\u65F6: ${timeout / 1e3}s)`, "info");
+      const videoLink = page.getByRole("link", { name: context.common.video_title, exact: true });
+      await videoLink.waitFor({ state: "visible", timeout });
+      context.log("\u9A8C\u8BC1\u6210\u529F: \u5728\u7A3F\u4EF6\u7BA1\u7406\u9875\u9762\u627E\u5230\u4E86\u5339\u914D\u7684\u89C6\u9891\u3002", "success");
       return true;
-    } else {
-      context.log(
-        `\u9A8C\u8BC1\u5931\u8D25: \u9875\u9762\u6807\u9898 "${pageTitle}" \u4E0E\u671F\u671B\u7684\u89C6\u9891\u6807\u9898 "${context.common.video_title}" \u4E0D\u5339\u914D\u3002`,
-        "warn"
-      );
-      return false;
+    } catch (e) {
+      if (i < 2) {
+        context.log(`\u672A\u627E\u5230\u89C6\u9891\uFF0C\u53EF\u80FD\u662F\u5BA1\u6838\u5EF6\u8FDF\uFF0C\u5C06\u8FDB\u884C\u4E0B\u4E00\u6B21\u5C1D\u8BD5...`, "warn");
+        await page.reload({ waitUntil: "networkidle" });
+      }
     }
-  } catch (error) {
-    context.log(`\u9A8C\u8BC1\u8FC7\u7A0B\u4E2D\u53D1\u751F\u9519\u8BEF: ${error.message}`, "error");
-    return false;
   }
+  context.log("\u9A8C\u8BC1\u5931\u8D25: \u591A\u6B21\u5C1D\u8BD5\u540E\uFF0C\u5728\u7A3F\u4EF6\u7BA1\u7406\u9875\u9762\u4ECD\u672A\u627E\u5230\u5339\u914D\u7684\u89C6\u9891\u3002", "error");
+  return false;
 }
 var uploader = {
   isLoggedIn,

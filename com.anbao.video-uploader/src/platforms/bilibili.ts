@@ -18,10 +18,10 @@ const randomDelay = (min = 500, max = 1200) => {
  * 模拟人类点击，包含悬停和随机延迟，以提高稳定性。
  * @param locator Playwright Locator 对象
  */
-const humanClick = async (locator: import("playwright").Locator) => {
+const humanClick = async (locator: import("playwright").Locator, options?: { force?: boolean }) => {
   await locator.hover({ trial: true }); // 使用 trial 模式以避免在元素快速消失时出错
   await randomDelay(200, 500);
-  await locator.click();
+  await locator.click(options);
 };
 
 /**
@@ -124,7 +124,6 @@ async function upload({
   const { common } = context;
   const {
     video_file_path,
-    cover_file_path,
     video_title,
     video_description,
     topics,
@@ -134,6 +133,7 @@ async function upload({
     bilibili_schedule_enabled,
     bilibili_schedule_time,
     upload_timeout_minutes,
+    manual_audit_required,
   } = common;
 
   await doAction(
@@ -171,62 +171,6 @@ async function upload({
   context.log("等待 3 秒，以确保页面元素加载完成...", "info");
   await randomDelay(3000, 3500);
 
-  // --- 2. 上传封面 (如果提供) ---
-  if (cover_file_path) {
-    context.log("准备上传封面，正在等待“更换封面”按钮出现...", "info");
-    let buttonVisible = false;
-    const initialTimeout = 30000; // 30 seconds
-    for (let i = 0; i < 3; i++) {
-      const timeout = initialTimeout * Math.pow(2, i);
-      try {
-        context.log(
-          `正在等待“更换封面”按钮... (尝试 ${i + 1}/3, 超时: ${
-            timeout / 1000
-          }s)`,
-          "info"
-        );
-        await page.getByText("更换封面").waitFor({ state: "visible", timeout });
-        context.log("“更换封面”按钮已出现。", "success");
-        buttonVisible = true;
-        break;
-      } catch (e) {
-        if (i < 2) {
-          context.log(`等待“更换封面”按钮超时，将进行下一次尝试...`, "warn");
-        }
-      }
-    }
-
-    if (!buttonVisible) {
-      throw new PlatformError(
-        "视频上传成功，但“更换封面”按钮长时间未出现，无法上传封面。"
-      );
-    }
-
-    await doAction(async () => {
-      context.log("开始上传封面流程...", "info");
-      
-      // 1. 点击“更换封面”
-      await humanClick(page.getByText("更换封面"));
-      
-      // 2. 在弹出的模态框中点击“上传封面”
-      await humanClick(page.getByText("上传封面"));
-
-      // 3. 使用 setInputFiles 与“上传图片”按钮交互
-      const uploadButton = page.getByRole('button', { name: '上传图片' });
-      await uploadButton.setInputFiles(cover_file_path);
-
-      // 4. 等待上传和裁剪完成，点击“完成”
-      const doneButton = page.getByRole('button', { name: '完成' });
-      await doneButton.waitFor({ state: 'visible', timeout: 60000 });
-      await humanClick(doneButton);
-
-      // 5. 验证封面是否上传成功
-      await page
-        .locator(".cover-upload-success-tip")
-        .waitFor({ state: "visible", timeout: 60000 });
-
-    }, "上传并设置视频封面");
-  }
 
   // --- 3. 填写标题 ---
   const titleSelector = 'input[placeholder="请输入稿件标题"]';
@@ -238,7 +182,8 @@ async function upload({
   // --- 4. 选择类型 (自制/转载) ---
   const targetType = bilibili_type || "自制";
   await doAction(async () => {
-    const typeButton = page.getByText(targetType, { exact: true }).first();
+    // 根据用户反馈，使用更精确的定位器来选择稿件类型
+    const typeButton = page.locator('div').filter({ hasText: new RegExp(`^${targetType}$`) }).first();
     await humanClick(typeButton);
   }, `选择稿件类型: ${targetType}`);
 
@@ -363,16 +308,37 @@ async function upload({
   }
 
   // --- 9. 提交 ---
-  context.log("所有信息填写完毕，准备提交。", "info");
-  const submitText = submit_action === "存草稿" ? "存草稿" : "立即投稿";
-  await doAction(
-    () => humanClick(page.getByText(submitText)),
-    `点击“${submitText}”按钮`
-  );
+  if (manual_audit_required) {
+    context.log("所有信息已填写完毕，进入人工审核模式...", "info");
+    while (true) {
+      await context.requestHumanIntervention({
+        message: "请您审核后，手动点击‘立即投稿’或‘存为草稿’，然后点击下方的“继续”按钮。",
+      });
 
-  if (submit_action === "存草稿") {
-    context.log("已存为草稿，任务结束。", "success");
-    return { postUrl: "draft" };
+      context.log("人工审核“继续”被点击，正在校验提交状态...", "info");
+      const titleInputStillVisible = await page.locator('input[placeholder="请输入稿件标题"]').isVisible();
+      
+      if (titleInputStillVisible) {
+        context.log("检测到表单仍未提交，将再次请求人工介入。请务必先在页面上点击提交按钮。", "warn");
+        // Loop will continue, re-prompting the user.
+      } else {
+        context.log("表单已提交，任务正常结束。", "success");
+        return { postUrl: "submitted_by_user" };
+      }
+    }
+  } else {
+    // 未开启人工审核，按原计划自动提交
+    context.log("所有信息填写完毕，准备自动提交。", "info");
+    const submitText = submit_action === "存草稿" ? "存为草稿" : "立即投稿";
+    await doAction(
+      () => humanClick(page.getByText(submitText)),
+      `点击“${submitText}”按钮`
+    );
+
+    if (submit_action === "存草稿") {
+      context.log("已自动存为草稿，任务结束。", "success");
+      return { postUrl: "draft" };
+    }
   }
 
   // --- 10. 等待发布成功 ---
@@ -400,35 +366,34 @@ async function verify(
   { page, context }: RunOptions,
   { postUrl }: { postUrl: string }
 ): Promise<boolean> {
-  if (postUrl === "draft") {
-    context.log("操作为存为草稿，跳过后置验证。", "info");
+  if (postUrl === "draft" || postUrl === "submitted_by_user" || postUrl === "pending_manual_action") {
+    context.log("操作为存为草稿或人工提交，跳过后置验证。", "info");
     return true;
   }
 
   context.log("正在执行发布后验证...", "info");
-  if (!postUrl) {
-    context.log("无 postUrl，跳过验证。", "warn");
-    return false;
+  
+  await page.goto("https://member.bilibili.com/platform/upload-manager/article", { waitUntil: "networkidle" });
+
+  const initialTimeout = 30000; // 30 seconds
+  for (let i = 0; i < 3; i++) {
+    const timeout = initialTimeout * Math.pow(2, i);
+    try {
+      context.log(`正在稿件管理页面查找视频... (尝试 ${i + 1}/3, 超时: ${timeout / 1000}s)`, "info");
+      const videoLink = page.getByRole('link', { name: context.common.video_title, exact: true });
+      await videoLink.waitFor({ state: "visible", timeout });
+      context.log("验证成功: 在稿件管理页面找到了匹配的视频。", "success");
+      return true;
+    } catch (e) {
+      if (i < 2) {
+        context.log(`未找到视频，可能是审核延迟，将进行下一次尝试...`, "warn");
+        await page.reload({ waitUntil: "networkidle" }); // Reload the page before next try
+      }
+    }
   }
 
-  try {
-    await page.goto(postUrl, { waitUntil: "networkidle" });
-    await randomDelay(2000, 3000); // 等待页面稳定
-    const pageTitle = await page.title();
-    if (pageTitle.includes(context.common.video_title)) {
-      context.log("验证成功: 页面标题包含视频标题。", "success");
-      return true;
-    } else {
-      context.log(
-        `验证失败: 页面标题 "${pageTitle}" 与期望的视频标题 "${context.common.video_title}" 不匹配。`,
-        "warn"
-      );
-      return false;
-    }
-  } catch (error) {
-    context.log(`验证过程中发生错误: ${(error as Error).message}`, "error");
-    return false;
-  }
+  context.log("验证失败: 多次尝试后，在稿件管理页面仍未找到匹配的视频。", "error");
+  return false;
 }
 
 export const uploader: Uploader = {

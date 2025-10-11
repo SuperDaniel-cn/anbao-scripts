@@ -7,11 +7,6 @@
       "format": "file",
       "title": "1. 本地视频文件"
     },
-    "cover_file_path": {
-      "type": "string",
-      "format": "file",
-      "title": "2. 视频封面 (可选)"
-    },
     "video_title": {
       "type": "string",
       "title": "3. 视频标题"
@@ -54,12 +49,17 @@
     "submit_action": {
       "type": "string",
       "title": "10. 提交操作",
-      "enum": ["立即投稿", "存为草稿"],
-      "default": "存为草稿"
+      "enum": ["立即投稿", "存草稿"],
+      "default": "存草稿"
+    },
+    "manual_audit_required": {
+      "type": "boolean",
+      "title": "11. 开启人工审核 (提交前暂停)",
+      "default": true
     },
     "upload_timeout_minutes": {
       "type": "number",
-      "title": "11. 上传超时时间 (分钟)",
+      "title": "12. 上传超时时间 (分钟)",
       "default": 30
     }
   },
