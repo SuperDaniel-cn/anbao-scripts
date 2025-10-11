@@ -31,11 +31,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-
-      - name: Commit and push generated index.json
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add public/index.json
-          git diff --staged --quiet || git commit -m "Build market index [skip ci]"
-          git push
+          # By using actions-gh-pages, the generated index.json will be deployed
+          # to the gh-pages branch automatically. We no longer need to manually
+          # commit it back to the main branch. This avoids the extra commit
+          # on the remote branch that forces a `git pull` locally.
+          commit_message: "Deploy market index to Pages [skip ci]"
