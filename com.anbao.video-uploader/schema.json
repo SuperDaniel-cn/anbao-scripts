@@ -7,24 +7,60 @@
       "format": "file",
       "title": "1. 本地视频文件"
     },
+    "cover_file_path": {
+      "type": "string",
+      "format": "file",
+      "title": "2. 视频封面 (可选)"
+    },
     "video_title": {
       "type": "string",
-      "title": "2. 视频标题"
+      "title": "3. 视频标题"
     },
     "video_description": {
       "type": "string",
       "format": "textarea",
-      "title": "3. 视频描述"
+      "title": "4. 视频描述 (通用)"
     },
     "topics": {
       "type": "string",
-      "title": "4. 话题标签 (用逗号或空格分隔)"
+      "title": "5. 话题标签 (通用, 用逗号或空格分隔)"
+    },
+    "bilibili_category": {
+      "type": "string",
+      "title": "6. Bilibili 分区",
+      "keyword": ["bilibili"],
+      "enum": ["影视", "娱乐", "音乐", "舞蹈", "动画", "绘画", "鬼畜", "游戏", "资讯", "知识", "人工智能", "科技数码", "汽车", "时尚美妆", "家装房产", "户外潮流", "健身", "体育运动", "手工", "美食", "小剧场", "旅游出行", "三农", "动物", "亲子", "健康", "情感", "vlog", "生活兴趣", "生活经验"],
+      "default": "知识"
+    },
+    "bilibili_type": {
+      "type": "string",
+      "title": "7. Bilibili 稿件类型",
+      "keyword": ["bilibili"],
+      "enum": ["自制", "转载"],
+      "default": "自制"
+    },
+    "bilibili_schedule_enabled": {
+      "type": "boolean",
+      "title": "8. Bilibili 定时发布",
+      "keyword": ["bilibili"],
+      "default": false
+    },
+    "bilibili_schedule_time": {
+      "type": "string",
+      "format": "date-time",
+      "title": "9. Bilibili 发布时间",
+      "keyword": ["bilibili"]
     },
     "submit_action": {
       "type": "string",
-      "title": "5. 提交操作",
+      "title": "10. 提交操作",
       "enum": ["立即投稿", "存为草稿"],
-      "default": "立即投稿"
+      "default": "存为草稿"
+    },
+    "upload_timeout_minutes": {
+      "type": "number",
+      "title": "11. 上传超时时间 (分钟)",
+      "default": 30
     }
   },
   "required": [
