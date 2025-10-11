@@ -15,16 +15,27 @@ const randomDelay = (min = 500, max = 1200) => {
 };
 
 /**
+ * 模拟人类点击，包含悬停和随机延迟，以提高稳定性。
+ * @param locator Playwright Locator 对象
+ */
+const humanClick = async (locator: import("playwright").Locator) => {
+  await locator.hover({ trial: true }); // 使用 trial 模式以避免在元素快速消失时出错
+  await randomDelay(200, 500);
+  await locator.click();
+};
+
+/**
  * 模拟人类打字，带有随机延迟。
  * @param page Playwright Page 对象
  * @param selector 目标元素的选择器
  * @param text 要输入的文本
  */
 const humanType = async (page: Page, selector: string, text: string) => {
-  await page.locator(selector).click({ delay: Math.random() * 200 + 50 });
-  await page.locator(selector).fill(""); // 先清空
+  const locator = page.locator(selector);
+  await humanClick(locator); // 使用新的、更可靠的点击辅助函数
+  await locator.fill(""); // 先清空
   await randomDelay(100, 200);
-  await page.locator(selector).type(text, { delay: Math.random() * 150 + 50 });
+  await locator.type(text, { delay: Math.random() * 150 + 50 });
 };
 
 // --- Resilient Action Wrapper ---
@@ -136,7 +147,7 @@ async function upload({
   // --- 1. 上传文件 ---
   await doAction(async () => {
     const fileChooserPromise = page.waitForEvent("filechooser");
-    await page.locator(".bcc-upload-wrapper").click();
+    await humanClick(page.locator(".bcc-upload-wrapper"));
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(video_file_path);
   }, "选择并上传视频文件");
@@ -183,7 +194,7 @@ async function upload({
 
     await doAction(async () => {
       const fileChooserPromise = page.waitForEvent("filechooser");
-      await page.getByText("更换封面").click();
+      await humanClick(page.getByText("更换封面"));
       const fileChooser = await fileChooserPromise;
       await fileChooser.setFiles(cover_file_path);
       await page
@@ -201,17 +212,17 @@ async function upload({
 
   // --- 4. 选择类型 (自制/转载) ---
   const targetType = bilibili_type || "自制";
-  await doAction(
-    () => page.getByText(targetType, { exact: true }).first().click(),
-    `选择稿件类型: ${targetType}`
-  );
+  await doAction(async () => {
+    const typeButton = page.getByText(targetType, { exact: true }).first();
+    await humanClick(typeButton);
+  }, `选择稿件类型: ${targetType}`);
 
   // --- 5. 填写标签 ---
   const topicList = topics ? topics.split(/[\s,，]+/).filter(Boolean) : [];
   if (topicList.length > 0) {
     await doAction(async () => {
       const tagInput = page.getByRole("textbox", { name: "按回车键Enter创建标签" });
-      await tagInput.click();
+      await humanClick(tagInput);
       const getRemainingSlots = async (): Promise<number | null> => {
         try {
           const locator = page.getByText(/还可以添加\d+个标签/);
@@ -253,9 +264,9 @@ async function upload({
   // --- 6. 选择分区 ---
   await doAction(async () => {
     const targetCategory = bilibili_category || "知识";
-    await page.locator(".select-controller").first().click();
+    await humanClick(page.locator(".select-controller").first());
     await randomDelay(300, 500);
-    await page.getByTitle(targetCategory).click();
+    await humanClick(page.getByTitle(targetCategory));
     await randomDelay(100, 200);
     const selectedText = await page.locator(".select-item-cont-inserted").textContent();
     if (selectedText?.trim() !== targetCategory) {
@@ -274,7 +285,7 @@ async function upload({
   // --- 8. 定时发布 ---
   if (bilibili_schedule_enabled) {
     await doAction(async () => {
-      await page.locator(".switch-container").first().click();
+      await humanClick(page.locator(".switch-container").first());
       context.log("已开启定时发布功能。", "info");
       if (bilibili_schedule_time) {
         const scheduleDate = new Date(bilibili_schedule_time);
@@ -282,7 +293,7 @@ async function upload({
         const timeStr = scheduleDate.toTimeString().substring(0, 5);
 
         // 设置日期
-        await page.locator('.date-picker-date').click();
+        await humanClick(page.locator('.date-picker-date'));
         await randomDelay(200, 400);
         await page.evaluate(([date]) => {
             const spans = Array.from(document.querySelectorAll('.mx-calendar-content span')) as HTMLElement[];
@@ -291,7 +302,7 @@ async function upload({
         }, [dateStr]);
         
         // 设置时间
-        await page.locator('.time-picker-time').click();
+        await humanClick(page.locator('.time-picker-time'));
         await randomDelay(200, 400);
         await page.evaluate(([time]) => {
             const target = Array.from(document.querySelectorAll('.time-select-item')).find(
@@ -309,7 +320,7 @@ async function upload({
   context.log("所有信息填写完毕，准备提交。", "info");
   const submitText = submit_action === "存草稿" ? "存草稿" : "立即投稿";
   await doAction(
-    () => page.getByText(submitText).click(),
+    () => humanClick(page.getByText(submitText)),
     `点击“${submitText}”按钮`
   );
 
