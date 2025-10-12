@@ -14,10 +14,10 @@
     ],
     "versions": [
       {
-        "version": "1.5.0",
+        "version": "1.0.0",
         "changelog": "",
-        "published_at": "2025-10-12T05:47:59.243Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.5.0/bundle.js"
+        "published_at": "2025-10-12T05:51:36.153Z",
+        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@refs/heads/main/com.anbao.video-uploader/1.0.0/bundle.js"
       }
     ]
   }
