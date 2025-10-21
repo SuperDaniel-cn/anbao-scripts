@@ -1,0 +1,40 @@
+{
+  "name": "com.anbao.uploader",
+  "version": "1.0.1",
+  "type": "module",
+  "displayName": "多平台视频上传助手",
+  "description": "一键上传多个国内平台视频的脚本",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "build": "node build.cjs",
+    "test": "playwright test"
+  },
+  "keywords": [
+    "bilibili",
+    "kuaishou",
+    "xiaohongshu",
+    "douyin",
+    "weixin"
+  ],
+  "author": "Daniel",
+  "tags": [
+    "B站",
+    "快手",
+    "小红书",
+    "抖音",
+    "视频号"
+  ],
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "^24.7.2",
+    "esbuild": "^0.25.10",
+    "globals": "^16.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.1"
+  },
+  "dependencies": {
+    "openai": "^6.3.0",
+    "patchright": "^1.56.1",
+    "playwright": "^1.56.1"
+  }
+}

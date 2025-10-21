@@ -1,0 +1,89 @@
+{
+  "title": "多平台视频上传脚本",
+  "type": "object",
+  "properties": {
+    "video_file_path": {
+      "type": "string",
+      "format": "file",
+      "title": "1. 视频文件"
+    },
+    "cover_image_path": {
+      "type": "string",
+      "format": "file",
+      "title": "2. 封面文件"
+    },
+    "title": {
+      "type": "string",
+      "title": "3. 视频标题"
+    },
+    "description": {
+      "type": "string",
+      "format": "textarea",
+      "title": "4. 视频简介"
+    },
+    "tags": {
+      "type": "string",
+      "title": "5. 话题标签"
+    },
+    "schedule_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "6. 定时发布"
+    },
+    "final_action": {
+      "type": "string",
+      "title": "7. 最终操作",
+      "enum": ["发布", "存草稿", "人工审查"],
+      "default": "人工审查"
+    },
+    "partition": {
+      "type": "string",
+      "title": "分区 (B站)",
+      "keyword": ["bilibili"],
+      "enum": [
+        "影视",
+        "娱乐",
+        "音乐",
+        "舞蹈",
+        "动画",
+        "绘画",
+        "鬼畜",
+        "游戏",
+        "资讯",
+        "知识",
+        "人工智能",
+        "科技数码",
+        "汽车",
+        "时尚美妆",
+        "家装房产",
+        "户外潮流",
+        "健身",
+        "体育运动",
+        "手工",
+        "美食",
+        "小剧场",
+        "旅游出行",
+        "三农",
+        "动物",
+        "亲子",
+        "健康",
+        "情感",
+        "vlog",
+        "生活兴趣",
+        "生活经验"
+      ]
+    },
+    "upload_timeout_minutes": {
+      "type": "number",
+      "title": "[高级] 上传超时(分钟)",
+      "default": 30
+    }
+  },
+  "required": [
+    "video_file_path",
+    "title",
+    "description",
+    "final_action",
+    "partition"
+  ]
+}

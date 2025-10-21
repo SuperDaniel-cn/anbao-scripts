@@ -1,0 +1,38 @@
+name: Build and Deploy Dev Market Index
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-deploy-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: develop # Make sure we are on the develop branch
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Build dev market index
+        run: node .github/scripts/build-index-dev.js
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }} # Pass the ref to get the correct branch name
+
+      - name: Deploy to GitHub Pages (Dev)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          # Keep the gh-pages branch clean by not committing the build result to it
+          # The dev index will be in a subdirectory
+          commit_message: "Deploy dev market index to Pages [skip ci]"
