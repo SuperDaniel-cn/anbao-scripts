@@ -1,66 +1,22 @@
 [
   {
     "id": "com.anbao.uploader",
-    "name": "Bilibili Uploader Test",
-    "description": "A test script for Bilibili uploader.",
-    "author": "Roo",
+    "name": "多平台视频上传助手",
+    "description": "一键上传多个国内平台视频的脚本",
+    "author": "Daniel",
     "tags": [
-      "bilibili",
-      "test",
-      "automation"
+      "B站",
+      "快手",
+      "小红书",
+      "抖音",
+      "视频号"
     ],
     "versions": [
-      {
-        "version": "1.0.3",
-        "changelog": "",
-        "published_at": "2025-10-12T14:14:07.192Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.uploader/1.0.3/bundle.js"
-      },
-      {
-        "version": "1.0.2",
-        "changelog": "",
-        "published_at": "2025-10-12T14:14:07.191Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.uploader/1.0.2/bundle.js"
-      },
       {
         "version": "1.0.1",
         "changelog": "",
-        "published_at": "2025-10-12T14:14:07.001Z",
+        "published_at": "2025-10-21T14:46:48.941Z",
         "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.uploader/1.0.1/bundle.js"
-      }
-    ]
-  },
-  {
-    "id": "com.anbao.video-uploader",
-    "name": "跨平台视频发布助手 (标杆脚本)",
-    "description": "【标杆脚本】一键将本地视频发布到多个平台。此脚本展示了包括人性化交互、平台专属选项、多级重试和后置验证在内的所有最佳实践。",
-    "author": "Anbao Team (Roo)",
-    "tags": [
-      "视频发布",
-      "多平台",
-      "标杆脚本",
-      "自动化",
-      "bilibili",
-      "douyin"
-    ],
-    "versions": [
-      {
-        "version": "1.2.0",
-        "changelog": "",
-        "published_at": "2025-10-12T14:14:07.195Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.video-uploader/1.2.0/bundle.js"
-      },
-      {
-        "version": "1.1.0",
-        "changelog": "",
-        "published_at": "2025-10-12T14:14:07.195Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.video-uploader/1.1.0/bundle.js"
-      },
-      {
-        "version": "1.0.0",
-        "changelog": "",
-        "published_at": "2025-10-12T14:14:07.194Z",
-        "download_url": "https://cdn.jsdelivr.net/gh/SuperDaniel-cn/anbao-scripts@develop/com.anbao.video-uploader/1.0.0/bundle.js"
       }
     ]
   }
