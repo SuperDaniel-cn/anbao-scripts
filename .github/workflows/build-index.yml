@@ -1,0 +1,38 @@
+name: Build and Deploy Market Index
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 获取所有历史记录，以便推送
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Build market index
+        run: node .github/scripts/build-index.js
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          # By using actions-gh-pages, the generated index.json will be deployed
+          # to the gh-pages branch automatically. We no longer need to manually
+          # commit it back to the main branch. This avoids the extra commit
+          # on the remote branch that forces a `git pull` locally.
+          commit_message: "Deploy market index to Pages [skip ci]"

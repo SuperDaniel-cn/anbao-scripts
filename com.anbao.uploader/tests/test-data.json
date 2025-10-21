@@ -1,0 +1,13 @@
+{
+  "video_file_path": "/Users/daniel/Downloads/你的“猪队友”老板，可能是你最好的“陪练”！.mp4",
+  "cover_image_path": "/Users/daniel/Downloads/图片处理.png",
+  "title": "这是一个由测试数据驱动的标题",
+  "description": "这是通过 Anbao Uploader 发布的自动化测试视频。",
+  "tags": "测试 自动化 JSON",
+  "schedule_date": "2025-10-28",
+  "schedule_time": "14:00",
+  "final_action": "人工审查",
+  "reprint_source": "",
+  "partition": "生活经验",
+  "video_type": "原创"
+}
