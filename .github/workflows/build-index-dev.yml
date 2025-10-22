@@ -33,6 +33,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          # Keep the gh-pages branch clean by not committing the build result to it
-          # The dev index will be in a subdirectory
+          destination_dir: dev
+          # Deploy to a subdirectory to avoid conflicts with main branch
           commit_message: "Deploy dev market index to Pages [skip ci]"
