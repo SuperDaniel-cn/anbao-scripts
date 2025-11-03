@@ -50,9 +50,7 @@ const uploadVideo = async ({ page, context }: RunOptions): Promise<void> => {
   await handleFileUpload({
     filePath: common.video_file_path as string,
     fileInputLocator,
-    successLocators: [
-      page.getByRole("textbox", { name: "填写作品标题，为作品获得更多流量" }),
-    ],
+    successLocators: [page.getByText("预览视频")],
     timeout,
   });
 };
