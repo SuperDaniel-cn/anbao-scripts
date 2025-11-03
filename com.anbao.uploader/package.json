@@ -1,6 +1,6 @@
 {
   "name": "com.anbao.uploader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "displayName": "多平台视频上传助手",
   "description": "一键上传多个国内平台视频的脚本",
