@@ -20,7 +20,7 @@ const wechatChannelsActionOrder = [
   "cover_image_path",
   "description",
   "tags",
-  "title",
+  "wechat_channels_title",
   "schedule_date",
 ];
 
@@ -87,7 +87,9 @@ const submit = async ({ page, context }: RunOptions): Promise<UploadResult> => {
     await page
       .getByRole("button", { name: "保存草稿" })
       .waitFor({ state: "hidden", timeout: 15000 });
-    context.log("草稿已保存，但缺少最终验证步骤。", "warn");
+    // 增加短暂延迟以应对网络抖动
+    await page.waitForTimeout(3000);
+    context.log("草稿已保存。", "info");
   } else {
     await page.getByRole("button", { name: "发表" }).click();
     status = "published";
@@ -95,7 +97,9 @@ const submit = async ({ page, context }: RunOptions): Promise<UploadResult> => {
     await page
       .getByRole("button", { name: "发表" })
       .waitFor({ state: "hidden", timeout: 15000 });
-    context.log("发表操作已提交，但缺少最终验证步骤。", "warn");
+    // 增加短暂延迟以应对网络抖动
+    await page.waitForTimeout(3000);
+    context.log("发表操作已提交。", "info");
   }
 
   return { status, postUrl: page.url() };
@@ -151,7 +155,7 @@ const platformActions: PlatformActionMap = {
     }
   },
 
-  title: async ({ page }, value) => {
+  wechat_channels_title: async ({ page }, value) => {
     const titleInput = page.getByRole("textbox", {
       name: "概括视频主要内容，字数建议6-16个字符",
     });

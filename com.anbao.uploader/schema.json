@@ -73,6 +73,11 @@
         "生活经验"
       ]
     },
+    "wechat_channels_title": {
+      "type": "string",
+      "title": "短标题 (视频号)",
+      "keyword": ["weixin"]
+    },
     "upload_timeout_minutes": {
       "type": "number",
       "title": "[高级] 上传超时(分钟)",

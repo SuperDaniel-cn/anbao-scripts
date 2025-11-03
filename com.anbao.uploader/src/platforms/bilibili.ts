@@ -90,17 +90,18 @@ const submit = async ({ page, context }: RunOptions): Promise<UploadResult> => {
   if (final_action === "存草稿") {
     await page.getByText("存草稿").click();
     status = "draft";
+    // “存草稿”的专属验证逻辑
+    const videoManagerLink = page.getByRole("link", {
+      name: "视频管理",
+      exact: true,
+    });
+    await videoManagerLink.waitFor({ timeout: 60000 });
   } else {
     // 默认或 "立即投稿"
     await page.getByText("立即投稿").click();
+    // “立即投稿”的专属验证逻辑
+    await page.getByText("稿件投递成功").waitFor({ timeout: 30000 });
   }
-
-  // 根据您的最终指示，统一等待提交成功的唯一关键指标
-  const videoManagerLink = page.getByRole("link", {
-    name: "视频管理",
-    exact: true,
-  });
-  await videoManagerLink.waitFor({ timeout: 60000 });
 
   return { status, postUrl: page.url() };
 };
