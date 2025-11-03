@@ -836,9 +836,7 @@ var uploadVideo5 = async ({ page, context }) => {
   await handleFileUpload({
     filePath: common.video_file_path,
     fileInputLocator,
-    successLocators: [
-      page.getByRole("textbox", { name: "填写作品标题，为作品获得更多流量" })
-    ],
+    successLocators: [page.getByText("预览视频")],
     timeout
   });
 };
